@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#100b0c" />
+    <title>MADRAS | FiveM Roleplay</title>
+    <link rel="icon" href="assets/logo.png" />
+    <style>
+      :root {
+        --red: #f33b42;
+        --bg: #100b0c;
+        --panel: #1b1516;
+        --muted: #bcb0b2;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: #fff;
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button,
+      a {
+        -webkit-tap-highlight-color: transparent;
+      }
+      button {
+        font: inherit;
+        cursor: pointer;
+      }
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: #100b0cf2;
+        border-bottom: 1px solid #ffffff14;
+        backdrop-filter: blur(12px);
+      }
+      nav {
+        max-width: 1200px;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 26px;
+        gap: 24px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 900;
+        letter-spacing: 3px;
+      }
+      .brand img {
+        width: 48px;
+        height: 36px;
+        object-fit: contain;
+      }
+      .links {
+        display: flex;
+        gap: 27px;
+        align-items: center;
+        font-size: 13px;
+        color: var(--muted);
+        font-weight: bold;
+      }
+      .links a:hover {
+        color: white;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: 1px solid transparent;
+        padding: 13px 23px;
+        border-radius: 7px;
+        font-weight: 800;
+        letter-spacing: 0.4px;
+        background: var(--red);
+        color: #100b0c;
+        transition: 0.2s;
+      }
+      .btn:hover {
+        background: #ff656a;
+        transform: translateY(-2px);
+      }
+      .outline {
+        background: transparent;
+        color: white;
+        border-color: #ffffff35;
+      }
+      .outline:hover {
+        background: #ffffff12;
+      }
+      .menu {
+        display: none;
+        background: none;
+        border: 0;
+        color: white;
+        font-size: 25px;
+      }
+      .wrap {
+        max-width: 1200px;
+        margin: auto;
+        padding: 0 26px;
+      }
+      .hero {
+        position: relative;
+        overflow: hidden;
+        min-height: 640px;
+        display: flex;
+        align-items: center;
+        background:
+          radial-gradient(ellipse at 80% 45%, #610e19 0, transparent 50%),
+          linear-gradient(125deg, #100b0c 45%, #200b10);
+        border-bottom: 1px solid #ffffff12;
+      }
+      .hero:before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          115deg,
+          transparent 0 75px,
+          #ff343407 76px 77px
+        );
+        pointer-events: none;
+      }
+      .hero-grid {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        align-items: center;
+        gap: 35px;
+        width: 100%;
+        padding-top: 70px;
+        padding-bottom: 70px;
+      }
+      .eyebrow {
+        font-size: 12px;
+        letter-spacing: 3px;
+        font-weight: 900;
+        color: var(--red);
+        text-transform: uppercase;
+      }
+      .hero h1 {
+        font-size: clamp(52px, 8vw, 112px);
+        line-height: 0.92;
+        letter-spacing: -5px;
+        margin: 20px 0 24px;
+        font-weight: 1000;
+      }
+      .hero h1 span {
+        color: var(--red);
+        display: block;
+      }
+      .hero p {
+        max-width: 530px;
+        color: var(--muted);
+        font-size: 18px;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 30px;
+      }
+      .hero-art {
+        position: relative;
+        display: grid;
+        place-items: center;
+        min-width: 0;
+      }
+      .hero-art:before {
+        content: "";
+        position: absolute;
+        width: 80%;
+        aspect-ratio: 1;
+        border: 1px solid #ff34343c;
+        transform: rotate(45deg);
+        border-radius: 25px;
+        box-shadow: 0 0 65px #ff303019;
+      }
+      .hero-art img {
+        position: relative;
+        width: 100%;
+        mix-blend-mode: screen;
+        animation: float 5s ease-in-out infinite;
+        filter: drop-shadow(0 0 22px #ff202030);
+      }
+      @keyframes float {
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+      .strip {
+        border-bottom: 1px solid #ffffff14;
+        background: #151011;
+      }
+      .strip .wrap {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        flex-wrap: wrap;
+      }
+      .status {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: #aaa;
+        box-shadow: 0 0 12px #aaa;
+      }
+      .dot.online {
+        background: #4ade80;
+        box-shadow: 0 0 12px #4ade80;
+      }
+      .dot.offline {
+        background: #f33b42;
+      }
+      .mini {
+        font-size: 12px;
+        color: var(--muted);
+        letter-spacing: 1px;
+      }
+      section {
+        padding: 85px 0;
+      }
+      h2 {
+        font-size: clamp(32px, 5vw, 52px);
+        line-height: 1.1;
+        margin: 12px 0 18px;
+        letter-spacing: -1.5px;
+      }
+      .intro {
+        color: var(--muted);
+        max-width: 700px;
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-top: 32px;
+      }
+      .tile {
+        background: linear-gradient(145deg, #22191b, #171213);
+        border: 1px solid #ffffff12;
+        border-radius: 12px;
+        padding: 26px;
+        transition: 0.2s;
+      }
+      .tile:hover {
+        border-color: #f33b4266;
+        transform: translateY(-4px);
+      }
+      .num {
+        color: var(--red);
+        font-size: 13px;
+        font-weight: bold;
+        letter-spacing: 2px;
+      }
+      .tile h3 {
+        margin: 15px 0 8px;
+        font-size: 22px;
+      }
+      .tile p {
+        color: var(--muted);
+        margin: 0;
+        font-size: 15px;
+      }
+      .alt {
+        background: #151011;
+        border-block: 1px solid #ffffff0e;
+      }
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 26px;
+        margin-top: 30px;
+      }
+      .step {
+        border-top: 2px solid #a52c36;
+        padding-top: 16px;
+      }
+      .step p {
+        color: var(--muted);
+      }
+      details {
+        border-bottom: 1px solid #ffffff20;
+        padding: 17px 0;
+      }
+      summary {
+        cursor: pointer;
+        font-weight: bold;
+      }
+      details p {
+        color: var(--muted);
+      }
+      .cta {
+        background:
+          radial-gradient(ellipse at top, #5d121b, transparent 75%), #1b1113;
+        text-align: center;
+        border: 1px solid #f33b4240;
+        border-radius: 16px;
+        padding: 55px 22px;
+      }
+      .cta p {
+        color: var(--muted);
+      }
+      .cta .actions {
+        justify-content: center;
+      }
+      footer {
+        border-top: 1px solid #ffffff14;
+        padding: 25px 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      footer .wrap {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #302326;
+        border: 1px solid #f33b4270;
+        padding: 12px 20px;
+        border-radius: 9px;
+        z-index: 30;
+        max-width: 90vw;
+        width: max-content;
+        box-shadow: 0 8px 40px #0008;
+      }
+      .toast[hidden] {
+        display: none;
+      }
+      a:focus-visible,
+      button:focus-visible,
+      summary:focus-visible {
+        outline: 2px solid white;
+        outline-offset: 4px;
+      }
+      @media (max-width: 800px) {
+        .menu {
+          display: block;
+        }
+        .links {
+          display: none;
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 65px;
+          background: #181113;
+          padding: 22px;
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .links.open {
+          display: flex;
+        }
+        .hero-grid {
+          grid-template-columns: 1fr;
+          padding-top: 48px;
+          padding-bottom: 45px;
+          gap: 20px;
+        }
+        .hero {
+          min-height: 0;
+        }
+        .hero h1 {
+          letter-spacing: -3px;
+        }
+        .hero-art {
+          max-width: 420px;
+          margin: auto;
+        }
+        .cards,
+        .steps {
+          grid-template-columns: 1fr;
+        }
+        section {
+          padding: 55px 0;
+        }
+        .hero-art:before {
+          width: 65%;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          scroll-behavior: auto !important;
+          transition: none !important;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="animations.css" />
+    <link rel="stylesheet" href="community.css" />
+  </head>
+  <body>
+    <div class="progress" aria-hidden="true"></div>
+    <header>
+      <nav>
+        <a href="#home" class="brand"
+          ><img src="assets/logo.png" alt="" />MADRAS</a
+        ><button
+          class="menu"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
+        <div class="links">
+          <a href="#home">HOME</a><a href="#about">ABOUT</a
+          ><a href="#join">HOW TO JOIN</a><a href="#rules">RULES</a
+          ><a href="#community">MEMBERS</a><a href="#staff">STAFF</a
+          ><button class="btn" data-action="discord">DISCORD ↗</button>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div class="hero" id="home">
+        <canvas class="particles" aria-hidden="true"></canvas>
+        <div class="wrap hero-grid">
+          <div>
+            <div class="eyebrow">FiveM • Community roleplay</div>
+            <h1>YOUR CITY.<span>YOUR STORY.</span></h1>
+            <p>
+              Welcome to MADRAS. Build your character, find your crew and write
+              your own story in a world shaped by its community.
+            </p>
+            <div class="actions">
+              <button class="btn" data-action="connect">▶ PLAY NOW</button
+              ><button class="btn outline" data-action="https://discord.gg/37eM3JT8X">
+                JOIN DISCORD ↗
+              </button>
+            </div>
+          </div>
+          <div class="hero-art">
+            <div class="orb"></div>
+            <span class="tag">MADRAS</span
+            ><span class="coordinates">ESTABLISH YOUR LEGACY</span
+            ><img src="assets/logo.png" alt="MADRAS community logo" />
+          </div>
+        </div>
+        <a class="scrollcue" href="#about">SCROLL TO EXPLORE</a>
+      </div>
+      <div class="strip">
+        <div class="wrap">
+          <div class="status">
+            <span class="dot" id="dot"></span
+            ><strong id="status">Server status not configured</strong>
+          </div>
+          <span class="mini" id="players">PLAYER COUNT —</span
+          ><button class="btn outline" data-action="copy">
+            COPY CONNECT COMMAND
+          </button>
+        </div>
+      </div>
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+          <span
+            >✦ MADRAS COMMUNITY　 /　 YOUR CITY. YOUR STORY.　 /　 BUILD YOUR
+            LEGACY　 /　 COMMUNITY FIRST</span
+          >
+          <span
+            >✦ MADRAS COMMUNITY　 /　 YOUR CITY. YOUR STORY.　 /　 BUILD YOUR
+            LEGACY　 /　 COMMUNITY FIRST</span
+          >
+          <span
+            >✦ MADRAS COMMUNITY　 /　 YOUR CITY. YOUR STORY.　 /　 BUILD YOUR
+            LEGACY　 /　 COMMUNITY FIRST</span
+          >
+          <span
+            >✦ MADRAS COMMUNITY　 /　 YOUR CITY. YOUR STORY.　 /　 BUILD YOUR
+            LEGACY　 /　 COMMUNITY FIRST</span
+          >
+        </div>
+      </div>
+      <section id="about">
+        <div class="wrap">
+          <div class="eyebrow">01 / Make your own legacy.</div>
+          <h2>Make your own legacy.</h2>
+          <p class="intro">
+            Discover the possibilities of community-driven roleplay. Choose a
+            path, meet new people and create memorable stories.
+          </p>
+          <div class="cards">
+            <article class="tile">
+              <div class="tile-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 2l8 4v6c0 5-8 10-8 10S4 17 4 12V6z" />
+                  <path d="M12 8v8m-4-4h8" />
+                </svg>
+              </div>
+              <div class="num">01 / WARM WELCOME</div>
+              <h3>MADRAS</h3>
+              <p>
+                THE MADRAS IS A OLD TAMIL RP COMMUNITY, WE ARE A COMMUNITY OF ROLEPLAYERS WHO LOVE TO CREATE STORIES AND MEMORIES. JOIN US AND BE PART OF OUR FAMILY.
+              </p>
+            </article>
+            <article class="tile">
+              <div class="tile-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="3" y="7" width="18" height="14" rx="2" />
+                  <path d="M8 7V4h8v3M3 12h18" />
+                </svg>
+              </div>
+              <div class="num">02 / CAREERS</div>
+              <h3>Build RP life</h3>
+              <p>
+                Build a career, start a business or become part of the Madras                
+              </p>
+            </article>
+            <article class="tile">
+              <div class="tile-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="9" cy="8" r="3" />
+                  <circle cx="17" cy="9" r="2" />
+                  <path d="M3 21v-4a6 6 0 0112 0v4m2-7a5 5 0 014 5v2" />
+                </svg>
+              </div>
+              <div class="num">03 / UNDERWORLD</div>
+              <h3>Syndicate</h3>
+              <p>
+                Create rivalries, Alliances and Crime Action's stories while
+                respecting community rules.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="alt" id="join">
+        <div class="wrap">
+          <div class="eyebrow">02 / Get started</div>
+          <h2>Enter MADRAS.</h2>
+          <div class="steps">
+            <article class="step">
+              <div class="num">STEP 01</div>
+              <h3>Install Discord</h3>
+              <p>Make sure you have Discord installed on your device.</p>
+              <a
+                class="btn outline"
+                href="https://discord.com/download"
+                target="_blank"
+                rel="noopener noreferrer"
+                >GET DISCORD ↗</a
+              >
+            </article>
+            <article class="step">
+              <div class="num">STEP 02</div>
+              <h3>Join our community</h3>
+              <p>
+                Meet the community on Discord and check the join.
+              </p>
+              <a
+                class="btn outline"
+                href="https://discord.gg/37eM3JT8X"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Join Discord ↗</a
+              >
+            </article>
+            <article class="step">
+              <div class="num">STEP 03</div>
+              <h3>Read the Server Rules</h3>
+              <p>make sure you understand the rules before joining and Keep in Touch with the members.</p>
+              <button class="btn" data-action="connect">CONNECT NOW</button>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section id="rules">
+        <div class="wrap">
+          <div class="eyebrow">03 / Community guidelines</div>
+          <h2>Respect the roleplay.</h2>
+          <p class="intro">
+            Starter guidelines — check Discord for the official rules and
+            requirements.
+          </p>
+          <details>
+            <summary>Respect every player</summary>
+            <p>
+              Harassment, discrimination and personal attacks are not welcome.
+            </p>
+          </details>
+          <details>
+            <summary>No RDM or VDM</summary>
+            <p>
+              Do not randomly attack players or use vehicles to harm players
+              without valid roleplay context.
+            </p>
+          </details>
+          <details>
+            <summary>No metagaming or powergaming</summary>
+            <p>
+              Keep outside information separate from your character and allow
+              others a fair chance to respond.
+            </p>
+          </details>
+          <details>
+            <summary>No cheating or exploiting</summary>
+            <p>
+              Do not use unauthorized modifications or abuse bugs. Report issues
+              to staff.
+            </p>
+          </details>
+        </div>
+      </section>
+      <section id="community">
+        <div class="wrap">
+          <p class="eyebrow">MADRAS COMMUNITY</p>
+          <h2>Member access</h2>
+          <p class="intro">
+            Sign in with Discord to see your community role and verify your member status.
+          </p>
+          <div class="community-panel">
+            <div id="community-message" aria-live="polite"></div>
+            <div id="identity">Loading Discord profile…</div>
+            <div class="community-actions">
+              <a id="login" class="btn discord-login" href="/auth/login">SIGN IN WITH DISCORD</a>
+              <button id="verify" class="btn" hidden>VERIFY MEMBERSHIP</button>
+              <button id="logout" class="btn outline" hidden>SIGN OUT</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="staff">
+        <div class="wrap">
+          <p class="eyebrow">THE PEOPLE BEHIND MADRAS</p>
+          <h2>Meet our staff</h2>
+          <p class="intro">
+            Our team, organized by official MADRAS Discord roles.
+          </p>
+          <div id="staff-list" aria-live="polite">Loading staff directory…</div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="wrap">
+        <span>© <span id="year"></span> MADRAS Community</span
+        ><span
+          >Independent FiveM community • Not affiliated with Rockstar
+          Games</span
+        >
+      </div>
+    </footer>
+    <div class="toast" role="status" hidden></div>
+    <script src="config.js"></script>
+    <script>
+      const cfg = window.MADRAS_CONFIG || {};
+      const toast = document.querySelector(".toast");
+      let timer;
+      function notify(msg) {
+        toast.textContent = msg;
+        toast.hidden = false;
+        clearTimeout(timer);
+        timer = setTimeout(() => (toast.hidden = true), 4500);
+      }
+      document.querySelector("#year").textContent = new Date().getFullYear();
+      const menu = document.querySelector(".menu"),
+        links = document.querySelector(".links");
+      menu.onclick = () => {
+        const open = links.classList.toggle("open");
+        menu.setAttribute("aria-expanded", open);
+      };
+      links.querySelectorAll("a").forEach(
+        (a) =>
+          (a.onclick = () => {
+            links.classList.remove("open");
+            menu.setAttribute("aria-expanded", "false");
+          }),
+      );
+      document.querySelectorAll("[data-action]").forEach(
+        (b) =>
+          (b.onclick = async () => {
+            const action = b.dataset.action;
+            if (action === "discord") {
+              if (!cfg.discordUrl)
+                return notify("Discord invite has not been configured yet.");
+              window.open(cfg.discordUrl, "_blank", "noopener,noreferrer");
+            } else if (action === "connect") {
+              if (!cfg.connectUrl)
+                return notify(
+                  "Server connection link has not been configured yet.",
+                );
+              location.href = cfg.connectUrl;
+            } else {
+              if (!cfg.connectCommand)
+                return notify("Connect command has not been configured yet.");
+              try {
+                await navigator.clipboard.writeText(cfg.connectCommand);
+                notify("Connect command copied!");
+              } catch {
+                prompt("Copy this FiveM command:", cfg.connectCommand);
+              }
+            }
+          }),
+      );
+      async function refresh() {
+        if (!cfg.statusApi) return;
+        const status = document.querySelector("#status"),
+          dot = document.querySelector("#dot"),
+          players = document.querySelector("#players");
+        try {
+          const r = await fetch(cfg.statusApi, {
+            cache: "no-store",
+            signal: AbortSignal.timeout(8000),
+          });
+          if (!r.ok) throw Error();
+          const j = await r.json();
+          if (typeof j.online !== "boolean") throw Error();
+          status.textContent = j.online ? "Server online" : "Server offline";
+          dot.className = "dot " + (j.online ? "online" : "offline");
+          players.textContent =
+            typeof j.players === "number"
+              ? "PLAYERS " +
+                j.players +
+                (typeof j.maxPlayers === "number" ? " / " + j.maxPlayers : "")
+              : "PLAYER COUNT —";
+        } catch {
+          status.textContent = "Server status unavailable";
+          dot.className = "dot";
+          players.textContent = "PLAYER COUNT —";
+        }
+      }
+      refresh();
+      if (cfg.statusApi) setInterval(refresh, 60000);
+    </script>
+    <button class="backtop" aria-label="Back to top">↑</button>
+    <script src="animations.js"></script>
+    <script src="community.js"></script>
+  </body>
+</html>
